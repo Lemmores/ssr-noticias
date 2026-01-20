@@ -16,7 +16,7 @@ export default async function handler(req, res) {
         ? noticia.textoCompleto[0]
         : "");
 
-    res.setHeader("Content-Type", "text/html");
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
 
     res.status(200).send(`
       <!DOCTYPE html>
@@ -39,9 +39,7 @@ export default async function handler(req, res) {
           <meta name="twitter:image" content="${noticia.imagem}" />
         </head>
         <body>
-          <script>
-            window.location.href = "https://matilha-news.vercel.app/noticia/${id}";
-          </script>
+          <p>Carregando notícia…</p>
         </body>
       </html>
     `);
