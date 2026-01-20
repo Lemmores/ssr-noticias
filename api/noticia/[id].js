@@ -1,16 +1,11 @@
-const express = require("express");
-const axios = require("axios");
+import axios from "axios";
 
-const app = express();
-
-const API_URL = "https://matilha-api.onrender.com"; // 🔥 SUA API REAL
-
-app.get("/noticia/:id", async (req, res) => {
-  const { id } = req.params;
+export default async function handler(req, res) {
+  const { id } = req.query;
 
   try {
     const response = await axios.get(
-      `${API_URL}/api/noticias/${id}` // ✅ ROTA CORRETA
+      `https://matilha-api.onrender.com/api/noticias/${id}`
     );
 
     const noticia = response.data;
@@ -21,7 +16,9 @@ app.get("/noticia/:id", async (req, res) => {
         ? noticia.textoCompleto[0]
         : "");
 
-    res.send(`
+    res.setHeader("Content-Type", "text/html");
+
+    res.status(200).send(`
       <!DOCTYPE html>
       <html lang="pt-BR">
         <head>
@@ -33,7 +30,7 @@ app.get("/noticia/:id", async (req, res) => {
           <meta property="og:title" content="${noticia.titulo}" />
           <meta property="og:description" content="${descricao}" />
           <meta property="og:image" content="${noticia.imagem}" />
-          <meta property="og:url" content="https://ssr-noticias-matilha.vercel.app/noticia/${id}" />
+          <meta property="og:url" content="https://ssr-noticias.vercel.app/noticia/${id}" />
 
           <!-- Twitter -->
           <meta name="twitter:card" content="summary_large_image" />
@@ -48,12 +45,7 @@ app.get("/noticia/:id", async (req, res) => {
         </body>
       </html>
     `);
-  } catch (err) {
-    console.error(err.message);
+  } catch (error) {
     res.status(404).send("Notícia não encontrada");
   }
-});
-
-app.listen(3000, () => {
-  console.log("SSR rodando na porta 3000");
-});
+}
