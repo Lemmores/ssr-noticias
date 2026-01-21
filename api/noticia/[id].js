@@ -16,48 +16,50 @@ export default async function handler(req, res) {
         ? noticia.textoCompleto[0]
         : "");
 
+    // 🔥 quebra cache do Twitter + força reprocessamento
+    const imageUrl = `${noticia.imagem}?v=${Date.now()}`;
+
     res.setHeader("Content-Type", "text/html; charset=utf-8");
 
     res.status(200).send(`
-      <!DOCTYPE html>
-      <html lang="pt-BR">
-        <head>
-          <meta charset="UTF-8" />
-          <title>${noticia.titulo}</title>
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>${noticia.titulo}</title>
 
-          <!-- Open Graph -->
-          <meta property="og:type" content="article" />
-          <meta property="og:title" content="${noticia.titulo}" />
-          <meta property="og:description" content="${descricao}" />
-          <meta property="og:image" content="${noticia.imagem}" />
-          <meta property="og:image:width" content="1200" />
-          <meta property="og:image:height" content="630" />
-          <meta property="og:image:type" content="image/png" />
-          <meta property="og:url" content="https://ssr-noticias.vercel.app/noticia/${id}" />
+    <!-- Open Graph -->
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="${noticia.titulo}" />
+    <meta property="og:description" content="${descricao}" />
+    <meta property="og:image" content="${imageUrl}" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:url" content="https://ssr-noticias.vercel.app/noticia/${id}" />
 
-          <!-- Twitter -->
-          <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:title" content="${noticia.titulo}" />
-          <meta name="twitter:description" content="${descricao}" />
-          <meta name="twitter:image" content="${noticia.imagem}" />
-          <meta name="twitter:image:alt" content="${noticia.titulo}" />
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="${noticia.titulo}" />
+    <meta name="twitter:description" content="${descricao}" />
+    <meta name="twitter:image" content="${imageUrl}" />
+    <meta name="twitter:image:alt" content="${noticia.titulo}" />
+  </head>
 
-        </head>
-        <body>
-  <p style="font-family: Arial, sans-serif; text-align: center; margin-top: 40px;">
-    Redirecionando para a notícia…
-  </p>
+  <body>
+    <p style="font-family: Arial, sans-serif; text-align: center; margin-top: 40px;">
+      Redirecionando para a notícia…
+    </p>
 
-  <script>
-  setTimeout(() => {
-    window.location.replace(
-      "https://matilha-news.vercel.app/noticia/${id}"
-    );
-  }, 150);
-</script>
-</body>
-
-      </html>
+    <script>
+      setTimeout(() => {
+        window.location.replace(
+          "https://matilha-news.vercel.app/noticia/${id}"
+        );
+      }, 120);
+    </script>
+  </body>
+</html>
     `);
   } catch (error) {
     res.status(404).send("Notícia não encontrada");
