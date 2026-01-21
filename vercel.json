@@ -1,8 +1,8 @@
 {
-  "routes": [
+  "rewrites": [
     {
-      "src": "/noticia/([^/]+)",
-      "dest": "/api/noticia/$1"
+      "source": "/noticia/:id",
+      "destination": "/api/noticia/:id"
     }
   ]
 }
