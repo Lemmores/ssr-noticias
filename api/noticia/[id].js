@@ -39,8 +39,17 @@ export default async function handler(req, res) {
           <meta name="twitter:image" content="${noticia.imagem}" />
         </head>
         <body>
-          <p>Carregando notícia…</p>
-        </body>
+  <p style="font-family: Arial, sans-serif; text-align: center; margin-top: 40px;">
+    Redirecionando para a notícia…
+  </p>
+
+  <script>
+    setTimeout(function () {
+      window.location.href = "https://matilha-news.vercel.app/noticia/${id}";
+    }, 800);
+  </script>
+</body>
+
       </html>
     `);
   } catch (error) {
