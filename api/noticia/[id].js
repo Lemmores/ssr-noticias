@@ -30,6 +30,9 @@ export default async function handler(req, res) {
           <meta property="og:title" content="${noticia.titulo}" />
           <meta property="og:description" content="${descricao}" />
           <meta property="og:image" content="${noticia.imagem}" />
+          <meta property="og:image:width" content="1200" />
+          <meta property="og:image:height" content="630" />
+          <meta property="og:image:type" content="image/png" />
           <meta property="og:url" content="https://ssr-noticias.vercel.app/noticia/${id}" />
 
           <!-- Twitter -->
@@ -37,6 +40,8 @@ export default async function handler(req, res) {
           <meta name="twitter:title" content="${noticia.titulo}" />
           <meta name="twitter:description" content="${descricao}" />
           <meta name="twitter:image" content="${noticia.imagem}" />
+          <meta name="twitter:image:alt" content="${noticia.titulo}" />
+
         </head>
         <body>
   <p style="font-family: Arial, sans-serif; text-align: center; margin-top: 40px;">
@@ -44,10 +49,12 @@ export default async function handler(req, res) {
   </p>
 
   <script>
-    setTimeout(function () {
-      window.location.href = "https://matilha-news.vercel.app/noticia/${id}";
-    }, 800);
-  </script>
+  setTimeout(() => {
+    window.location.replace(
+      "https://matilha-news.vercel.app/noticia/${id}"
+    );
+  }, 150);
+</script>
 </body>
 
       </html>
