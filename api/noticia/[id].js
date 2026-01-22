@@ -33,7 +33,7 @@ export default async function handler(req, res) {
           <meta property="og:image:width" content="1200" />
           <meta property="og:image:height" content="630" />
           <meta property="og:image:type" content="image/png" />
-          <meta property="og:url" content="https://ssr-noticias.vercel.app/noticia/${id}" />
+          <meta property="og:url" content="https://matilhanews.vercel.app/noticia/${id}" />
 
           <!-- Twitter -->
           <meta name="twitter:card" content="summary_large_image" />
